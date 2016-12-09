@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import TopHeader from './components/TopHeader'
+import TopHeader from './TopHeader'
 
 export default {
   name: 'App',

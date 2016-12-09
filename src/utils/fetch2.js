@@ -1,39 +1,50 @@
 import 'whatwg-fetch'
 
+const production = process.env.NODE_ENV === 'production'
+
+const Host = production ? 'http://www.caoyongzheng.com' : 'http://localhost:3000'
+
 function queryParams(params) {
-    return Object.keys(params)
-        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-        .join('&');
+  return Object.keys(params)
+    .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
+    .join('&')
+}
+
+function isUrlRelative(url) {
+  if (url.substr(0, 4) === 'http') {
+    return false
+  }
+  return true
 }
 
 function fetch2(url, options = {}) {
   const urlParse = document.createElement('a')
-  urlParse.href = url
-  if (!urlParse.hostname) {
-    urlParse.href = `${C.host}${url}`
+  if (isUrlRelative(url)) {
+    urlParse.href = `${Host}${url}`
+  } else {
+    urlParse.href = url
   }
-
-  const { headers, qp, ...others } =  options
+  const { headers, qp, ...others } = options
   const computedOptions = {
     credentials: 'include',
     headers: {
+      Accept: 'application/json',
       'Content-Type': 'application/json',
       ...(headers || {}),
     },
-    ...others
+    ...others,
   }
   if (qp) {
     urlParse.search += `${urlParse.search ? '&' : ''}${queryParams(qp)}`
   }
   return fetch(urlParse.href, computedOptions)
   .then((response) => {
-    if (response.status >= 200 && response.status < 300 || response.status === 0) {
+    if (response.status >= 200 && response.status < 300) {
       return response
-    } else {
-      const error = new Error(response.statusText)
-      error.response = response
-      throw error
     }
+    const error = new Error(response.statusText)
+    error.response = response
+    throw error
   })
 }
 
