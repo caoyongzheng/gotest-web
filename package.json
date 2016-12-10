@@ -43,13 +43,15 @@
     "gulp": "^3.9.1",
     "gulp-util": "^3.0.7",
     "html-webpack-plugin": "^2.24.1",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
     "open": "^0.0.5",
     "postcss": "^5.2.6",
     "postcss-loader": "^1.2.0",
     "style-loader": "^0.13.1",
     "vue-loader": "^10.0.2",
     "vue-template-compiler": "^2.1.4",
-    "webpack": "^1.13.3",
+    "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
   }
 }

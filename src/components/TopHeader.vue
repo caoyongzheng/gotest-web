@@ -1,20 +1,22 @@
 <template lang="html">
-  <nav class="top-header depth-1">
-    <div class="left">
+  <div class="wrap">
+    <nav class="top-header depth-1">
+      <div class="left">
 
-    </div>
-    <div class="right">
-      <div class="item" v-if="!isLogin">
-        登录
       </div>
-      <div class="item" v-if="!isLogin">
-        注册
+      <div class="right">
+        <div class="item" v-if="!isLogin" v-on:click="$store.commit('setSignModal', 1)">
+          登录
+        </div>
+        <div class="item" v-if="!isLogin" v-on:click="$store.commit('setSignModal', 2)">
+          注册
+        </div>
+        <div class="item user" v-if="isLogin">
+
+        </div>
       </div>
-      <div class="item user" v-if="isLogin">
-        
-      </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </template>
 
 <script>
@@ -31,6 +33,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+  .wrap {
+    height: 50px;
+    width: 100%;
+  }
   .top-header {
     position: fixed;
     z-index: 999;
@@ -51,6 +57,7 @@ export default {
     margin-right: 24px;
   }
   .item {
+    cursor: pointer;
     margin: 0 5px;
     display: inline-block;
   }

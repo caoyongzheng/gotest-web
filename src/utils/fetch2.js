@@ -1,4 +1,5 @@
 import 'whatwg-fetch'
+import notify from 'notify'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -45,6 +46,13 @@ function fetch2(url, options = {}) {
     const error = new Error(response.statusText)
     error.response = response
     throw error
+  })
+  .catch((error) => {
+    if (error.response) {
+      notify.error(`${error.response.status}:${error.message}`)
+    } else {
+      notify.error(error.message)
+    }
   })
 }
 

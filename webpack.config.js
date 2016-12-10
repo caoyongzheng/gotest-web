@@ -34,8 +34,12 @@ const config = {
         loader: 'vue',
       },
       {
-        test: /\.(css)$/,
+        test: /\.css$/,
         loader: 'style!css!postcss',
+      },
+      {
+        test: /\.less$/,
+        loader: 'style!css!less!postcss',
       },
     ],
   },
@@ -44,6 +48,7 @@ const config = {
     extensions: ['', '.js', '.vue'],
     alias: {
       fetch2: path.resolve('./src/utils/fetch2.js'),
+      notify: path.resolve('./src/utils/notify.js'),
     },
   },
   plugins: [
@@ -65,7 +70,7 @@ const config = {
     return [require('autoprefixer')]
   },
   vue: {
-    loaders: { css: 'style!css!postcss' },
+    loaders: { css: 'style!css!postcss', less: 'style!css!less!postcss' },
     postcss() {
       return [require('autoprefixer')]
     },
@@ -74,6 +79,8 @@ const config = {
     stats: {
       colors: true,
     },
+    port: 3001,
+    host: '0.0.0.0',
     hot: true,
     publicPath,
     contentBase: path.resolve('./src'),

@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 const state = {
   user: {},
+  signStatus: 0,  // 0: Closed, 1: SignIn, 2: SignUp, other: Closed
 }
 
 export default new Vuex.Store({

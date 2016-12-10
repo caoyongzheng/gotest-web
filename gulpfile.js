@@ -14,22 +14,22 @@ gulp.task('clean:assets', function (cb) {
   cb()
 })
 
-const host = 'http://localhost'
-const port = 3001
+
 
 gulp.task('webpack-dev-server', function(callback) {
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin()
   )
+  const host = webpackConfig.devServer.host
+  const port = webpackConfig.devServer.port
+  const url = `http://localhost:${port}`
   webpackConfig.entry.app.push(
-    `webpack-dev-server/client?${host}:${port}`,
+    `webpack-dev-server/client?${url}`,
     'webpack/hot/only-dev-server'
   )
   const compiler = webpack(webpackConfig)
-
-  new WebpackDevServer(compiler, webpackConfig.devServer).listen(port, "localhost", function(err) {
+  new WebpackDevServer(compiler, webpackConfig.devServer).listen(port, host, function(err) {
     if(err) throw new gutil.PluginError('webpack-dev-server', err)
-    const url = `${host}:${port}`
     gutil.log('[webpack-dev-server]', url)
     open(url)
     callback()

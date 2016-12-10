@@ -1,16 +1,18 @@
 <template lang="html">
-  <div class="login-modal">
-
+  <div class="input-container">
+    <input />
   </div>
 </template>
 
 <script>
 export default {
+  name: 'Input',
+
 }
 </script>
 
 <style lang="css" scoped>
-  .login-modal {
-    
+  .input-container {
+    width: 100%;
   }
 </style>

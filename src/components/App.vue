@@ -1,29 +1,26 @@
 <template lang="html">
   <div id="app">
     <TopHeader></TopHeader>
-    <div class="placeholder"></div>
     <div class="body">
       123
     </div>
+    <SignModal></SignModal>
   </div>
 </template>
 
 <script>
 import TopHeader from './TopHeader'
+import SignModal from './SignModal'
 
 export default {
   name: 'App',
-  components: { TopHeader },
+  components: { TopHeader, SignModal },
 }
 </script>
 
 <style lang="css" scoped>
   #app{
     position: relative;
-  }
-  .placeholder {
-    width: 100%;
-    height: 50px;
   }
   .body {
   }
@@ -32,6 +29,20 @@ export default {
   body{
     background-color: #FFFFFF;
     min-height: 100vh;
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+  }
+  html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {
+    -webkit-text-size-adjust:none;
+  }
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+  }
+  input{
+    -webkit-appearance:none;
+  }
+  * {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
   .depth-1,
   .depth-2,
