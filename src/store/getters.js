@@ -1,5 +1,5 @@
 export default {
   isLogin(state) {
-    return state.user && state.user.length > 0
+    return state.user && state.user.userId
   },
 }

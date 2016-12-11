@@ -42,6 +42,7 @@
 
 <script>
 import notify from 'notify'
+import fetch2 from 'fetch2'
 
 export default {
   name: 'LoginModal',
@@ -58,12 +59,37 @@ export default {
   },
   methods: {
     handleLogin() {
-      this.checkLoginData()
+      if (this.checkLoginData()) {
+        this.active1 = true
+        fetch2('/api/user/signin', {
+          method: 'POST',
+          body: JSON.stringify({ username: this.username, password: this.password }),
+        })
+        .then(response => response.json())
+        .then((data) => {
+          if (data.success) {
+            sessionStorage.setItem('token', data.token)
+            this.$store.dispatch('getUser')
+            this.$store.commit('setSignModal', 0)
+          } else {
+            notify.error(data.desc)
+          }
+        })
+        .then(() => {
+          this.active1 = false
+        })
+      }
     },
     checkLoginData() {
       if (!this.username) {
         notify.error('用户名不能为空')
+        return false
       }
+      if (!this.password) {
+        notify.error('密码不能为空')
+        return false
+      }
+      return true
     },
     handleLayerClick(e) {
       if (e.target === e.currentTarget) {

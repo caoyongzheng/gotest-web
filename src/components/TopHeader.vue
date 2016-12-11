@@ -12,7 +12,7 @@
           注册
         </div>
         <div class="item user" v-if="isLogin">
-
+          {{ $store.state.user.username }}
         </div>
       </div>
     </nav>
