@@ -65,18 +65,19 @@ export default {
           method: 'POST',
           body: JSON.stringify({ username: this.username, password: this.password }),
         })
+        .then((response) => {
+          this.active1 = false
+          return response
+        })
         .then(response => response.json())
         .then((data) => {
           if (data.success) {
-            sessionStorage.setItem('token', data.token)
+            localStorage.setItem('token', data.token)
             this.$store.dispatch('getUser')
             this.$store.commit('setSignModal', 0)
           } else {
             notify.error(data.desc)
           }
-        })
-        .then(() => {
-          this.active1 = false
         })
       }
     },

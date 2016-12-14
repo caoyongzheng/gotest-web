@@ -31,7 +31,7 @@ function fetch2(url, options = {}) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      token: sessionStorage.getItem('token'),
+      token: localStorage.getItem('token'),
       ...(headers || {}),
     },
     ...others,
