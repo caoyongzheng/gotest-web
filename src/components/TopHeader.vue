@@ -1,18 +1,20 @@
 <template lang="html">
   <div class="wrap">
-    <nav class="top-header depth-1">
+    <nav class="top-header depth-1 theme-bgcolor-primary">
       <div class="left">
-
       </div>
       <div class="right">
-        <div class="item" v-if="!isLogin" v-on:click="$store.commit('setSignModal', 1)">
+        <router-link class="item" v-if="!isLogin" to="sign#in">
           登录
-        </div>
-        <div class="item" v-if="!isLogin" v-on:click="$store.commit('setSignModal', 2)">
+        </router-link>
+        <router-link class="item" v-if="!isLogin" to="sign#up">
           注册
-        </div>
+        </router-link>
         <div class="item user" v-if="isLogin">
-          {{ $store.state.user.username }}
+          <div>{{ $store.state.user.username }}</div>
+          <ul class="depth-2">
+            <li v-on:click="logout">注销</li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -23,6 +25,11 @@
 
 export default {
   name: 'TopHeader',
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
+    },
+  },
   computed: {
     isLogin() {
       return this.$store.getters.isLogin
@@ -57,8 +64,33 @@ export default {
     margin-right: 24px;
   }
   .item {
+    position: relative;
     cursor: pointer;
     margin: 0 5px;
     display: inline-block;
+  }
+  .user div {
+    max-width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+  .user ul {
+    display: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+    list-style: none;
+    right: 0;
+    width: 100px;
+  }
+  .user ul li {
+    height: 45px;
+    line-height: 45px;
+  }
+  .user:hover ul {
+    display: block;
   }
 </style>

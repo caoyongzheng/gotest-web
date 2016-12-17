@@ -33,7 +33,8 @@ module.exports = {
     semi: ['error', 'never'],
     'no-new': 0,
     'no-param-reassign': 0,
+    'global-require': 0,
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
   }
 }

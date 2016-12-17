@@ -8,7 +8,8 @@ Vue.use(VueRouter)
 // })
 
 const routes = [
-  // { path: '/paper', component: Paper },
+  { path: '/', component: require('./pages/Index') },
+  { path: '/sign', component: require('./pages/Sign') },
 ]
 
 const router = new VueRouter({ mode: 'hash', routes })

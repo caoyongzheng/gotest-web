@@ -10,8 +10,8 @@
   left: 50%;
   right: 50%;
   transform: translate(-50%, 0);
-  min-width: 400px;
-  max-width: 75%;
+  width: 400px;
+  max-width: 80%;
   height: 45px;
   padding: 0 15px;
   overflow-x: hidden;
@@ -23,11 +23,7 @@
   animation-timing-function: ease-out;
   color: black;
 }
-@media (max-width: 600px) {
-  .notify-target {
-    min-width: 300px;
-  }
-}
+
 .notify-target.hide {
   height: 0;
   transition: height 500ms ease-in-out;

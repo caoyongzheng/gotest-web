@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import 'normalize.css'
+import './index.css'
 import router from './router'
 import App from './App'
 import store from './store'
 
-store.dispatch('getUser')
+store.dispatch('login')
 
 new Vue({
   router,
