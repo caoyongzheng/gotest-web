@@ -6,7 +6,7 @@ const publicPath = '/assets/'
 
 const config = {
   entry: {
-    vendor: ['vue', 'vue-router'],
+    vendor: ['vue', 'vue-router', 'fetch2', 'normalize.css'],
     app: ['./src/index.js'],
   },
   output: {
@@ -41,6 +41,13 @@ const config = {
         test: /\.less$/,
         loader: 'style!css!less!postcss',
       },
+      {
+        test: /\.(png|gif|jpe?g|svg|ttf|eot|woff)$/i,
+        loader: 'url',
+        query: {
+          limit: 8192,
+        },
+      }
     ],
   },
   resolve: {

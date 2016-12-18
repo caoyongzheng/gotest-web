@@ -13,6 +13,7 @@ input:-webkit-autofill {
 a {
   text-decoration: none;
   color: #000;
+  cursor: pointer;
 }
 input{
   -webkit-appearance:none;
@@ -37,7 +38,9 @@ input:focus {
 }
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;
 }
+
 html, body {
   width: 100%;
   height: 100%;

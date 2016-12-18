@@ -25,7 +25,7 @@ function fetch2(url, options = {}) {
   } else {
     urlParse.href = url
   }
-  const { headers, qp, ...others } = options
+  const { headers, query, ...others } = options
   const computedOptions = {
     credentials: 'include',
     headers: {
@@ -36,8 +36,8 @@ function fetch2(url, options = {}) {
     },
     ...others,
   }
-  if (qp) {
-    urlParse.search += `${urlParse.search ? '&' : ''}${queryParams(qp)}`
+  if (query) {
+    urlParse.search += `${urlParse.search ? '&' : ''}${queryParams(query)}`
   }
   return fetch(urlParse.href, computedOptions)
   .then((response) => {

@@ -4,10 +4,10 @@
       <div class="left">
       </div>
       <div class="right">
-        <router-link class="item" v-if="!isLogin" to="sign#in">
+        <router-link class="item" v-if="!isLogin" to="/sign#in">
           登录
         </router-link>
-        <router-link class="item" v-if="!isLogin" to="sign#up">
+        <router-link class="item" v-if="!isLogin" to="/sign#up">
           注册
         </router-link>
         <div class="item user" v-if="isLogin">
@@ -41,6 +41,7 @@ export default {
 
 <style lang="css" scoped>
   .wrap {
+    position: relative;
     height: 50px;
     width: 100%;
   }
