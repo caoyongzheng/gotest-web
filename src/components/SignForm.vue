@@ -31,8 +31,8 @@
       </div>
     </section>
     <section class="footer">
-      <button type="button" v-if="isSignIn" v-on:click="handleSignIn" :disabled="signin.active" :class="{ active: signin.active }">登录</button>
-      <button type="button" v-if="!isSignIn" v-on:click="handleSignUp" :disabled="signup.active" :class="{ active: signup.active }">注册</button>
+      <button type="button" v-if="isSignIn" v-on:click="handleSignIn" :disabled="signin.active">登录</button>
+      <button type="button" v-if="!isSignIn" v-on:click="handleSignUp" :disabled="signup.active">注册</button>
     </section>
   </section>
 </template>
@@ -199,22 +199,5 @@ export default {
     .body, .footer {
       margin: 10px 15px;
     }
-  }
-
-  button {
-    width: 100%;
-    cursor: pointer;
-    width: 100%;
-    height: 40px;
-    background-color: rgb(0, 188, 212);
-    border: 0;
-    outline: 0;
-  }
-  button:hover {
-    background-color: rgba(0, 188, 212, 0.8);
-  }
-  button.active {
-    cursor: not-allowed;
-    background-color: rgba(0, 188, 212, 0.6);
   }
 </style>

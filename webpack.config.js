@@ -42,7 +42,7 @@ const config = {
         loader: 'style!css!less!postcss',
       },
       {
-        test: /\.(png|gif|jpe?g|svg|ttf|eot|woff)$/i,
+        test: /\.(png|gif|jpe?g|svg|ttf|eot|woff)$/,
         loader: 'url',
         query: {
           limit: 8192,

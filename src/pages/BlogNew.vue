@@ -3,7 +3,8 @@
     <top-header></top-header>
     <div class="form">
       <input class="form-title" type="text" name="" value="" placeholder="标题">
-      <markdown-editor></markdown-editor>
+      <markdown-editor ref="editorCom"></markdown-editor>
+      <button type="button" class="add" :disabled="active">新增</button>
     </div>
   </div>
 </template>
@@ -13,6 +14,13 @@ import MarkdownEditor from '../components/MarkdownEditor'
 
 export default {
   name: 'BlogNew',
+  mounted() {
+  },
+  data() {
+    return {
+      active: false,
+    }
+  },
   components: { 'markdown-editor': MarkdownEditor },
 }
 </script>
@@ -24,6 +32,9 @@ export default {
     max-width: 96%;
   }
   .form-title {
-    margin-bottom: 25px;
+    margin-bottom:25px;
+  }
+  .add {
+    margin-top: 20px;
   }
 </style>
