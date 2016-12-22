@@ -11,6 +11,7 @@
 
 <script>
 import fetch2 from 'fetch2'
+import notify from 'notify'
 import MarkdownEditor from '../components/MarkdownEditor'
 
 export default {
@@ -37,10 +38,19 @@ export default {
       }
       fetch2('/blog', {
         methods: 'POST',
-        body: JSON.stringify({ title: this.title, content: this.$refs.editorCom.getValue() })
+        body: JSON.stringify({ title: this.title, content: this.$refs.editorCom.getValue() }),
       }).then((response) => {
         this.active = false
+        console.log(response)
         return response
+      })
+      .then(response => response.json())
+      .then(({ success, data, msg }) => {
+        if (success) {
+          this.$router.replace(`/blog/${data}`)
+        } else {
+          notify.error(msg)
+        }
       })
     },
     verifyPostData({ title, content }) {

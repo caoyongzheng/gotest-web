@@ -1,8 +1,3 @@
-.notify-container {
-  text-align: center;
-  -webkit-transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden;
-}
 .notify-target {
   position: fixed;
   text-align: left;
