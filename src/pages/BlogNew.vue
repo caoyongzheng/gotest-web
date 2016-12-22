@@ -2,14 +2,15 @@
   <div class="container">
     <top-header></top-header>
     <div class="form">
-      <input class="form-title" type="text" name="" value="" placeholder="标题">
+      <input class="form-title" type="text" v-model="title" placeholder="标题">
       <markdown-editor ref="editorCom"></markdown-editor>
-      <button type="button" class="add" :disabled="active">新增</button>
+      <button type="button" class="add" :disabled="active" v-on:click="addBlog">新增</button>
     </div>
   </div>
 </template>
 
 <script>
+import fetch2 from 'fetch2'
 import MarkdownEditor from '../components/MarkdownEditor'
 
 export default {
@@ -18,8 +19,41 @@ export default {
   },
   data() {
     return {
+      title: '',
       active: false,
     }
+  },
+  methods: {
+    addBlog() {
+      const postData = {
+        title: this.title,
+        content: this.$refs.editorCom.getValue(),
+      }
+      if (!this.verifyPostData(postData)) {
+        return
+      }
+      if (this.active) {
+        return
+      }
+      fetch2('/blog', {
+        methods: 'POST',
+        body: JSON.stringify({ title: this.title, content: this.$refs.editorCom.getValue() })
+      }).then((response) => {
+        this.active = false
+        return response
+      })
+    },
+    verifyPostData({ title, content }) {
+      if (!title) {
+        notify.error('标题不能为空！')
+        return false
+      }
+      if (!content) {
+        notify.error('内容不能为空！')
+        return false
+      }
+      return true
+    },
   },
   components: { 'markdown-editor': MarkdownEditor },
 }

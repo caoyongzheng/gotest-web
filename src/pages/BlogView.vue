@@ -11,7 +11,7 @@
         <div class="blog-footer">
           <img :src="(blog.author.headerIcon) || headerIcon" class="avatar" alt="作者头像">
           <p>{{ blog.author.username }}</p>
-          <p>浏览 <span>blog.views</span></p>
+          <p>浏览 <span>{{ blog.views }}</span></p>
           <p>更新时间 <span>{{ getUpdate(blog.update) }}</span></p>
         </div>
       </div>
