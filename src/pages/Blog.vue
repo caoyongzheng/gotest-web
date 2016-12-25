@@ -1,60 +1,70 @@
 <template lang="html">
-  <div class="container">
-    <top-header></top-header>
+  <container>
     <div class="blog-list">
       <div v-for="b in blogs" class="blog depth-1">
+        <router-link tag="img" :to="formatEditUrl(b.id)" :src="editIcon" class="imgIcon" v-if="b.author.id === $store.getters.userId"></router-link>
+        <router-link tag="img" :to="formatEditUrl(b.id)" :src="deleteIcon" class="imgIcon" v-if="b.author.id === $store.getters.userId"></router-link>
         <router-link :to="b.id" append class="header">
           {{ b.title }}
         </router-link>
         <div class="body">
-          {{ getContent(b.content) }}
+          {{ formatContent(b.content) }}
         </div>
         <div class="footer">
           <img class="avatar" :src="b.author.headerIcon || headerIcon" alt="头像">
           <p>{{ b.author.username }}</p>
           <p>浏览 <span>{{ b.views }}</span></p>
-          <p>更新时间 <span>{{ getUpdate(b.update) }}</span></p>
+          <p>更新时间 <span>{{ formatUpdate(b.update) }}</span></p>
         </div>
       </div>
     </div>
-  </div>
+  </container>
 </template>
 
 <script>
 import fetch2 from 'fetch2'
 import notify from 'notify'
+import container from '../components/Container'
 import headerIcon from '../imgs/header.png'
+import editIcon from '../imgs/edit.png'
+import deleteIcon from '../imgs/delete.png'
 
 export default {
   name: 'Blog',
+  components: { container },
   mounted() {
-    fetch2('/blog', {
-      query: this.$route.query,
-    })
-    .then(res => res.json())
-    .then(({ success, data, desc }) => {
-      if (success) {
-        this.total = data.total
-        this.blogs = data.blogs
-      } else {
-        notify.error(desc)
-      }
-    })
+    this.getBlogs()
   },
   data() {
     const { offset } = this.$route.query
     return {
       headerIcon,
+      editIcon,
+      deleteIcon,
       total: 0,
       blogs: [],
       offset: offset || 0,
     }
   },
   methods: {
-    getContent(content) {
+    getBlogs() {
+      fetch2('/blog/', {
+        query: this.$route.query,
+      })
+      .then(res => res.json())
+      .then(({ success, data, desc }) => {
+        if (success) {
+          this.total = data.total
+          this.blogs = data.blogs
+        } else {
+          notify.error(desc)
+        }
+      })
+    },
+    formatContent(content) {
       return content.length > 150 ? `${content.substr(0, 150)}...` : content
     },
-    getUpdate(update) {
+    formatUpdate(update) {
       const date = new Date(update)
       const now = new Date()
       let year = ''
@@ -62,6 +72,9 @@ export default {
         year = `${now.getYear()}年`
       }
       return `${year}${date.getMonth() + 1}月${date.getDate()}日`
+    },
+    formatEditUrl(blogId) {
+      return `/blog/${blogId}/edit`
     },
   },
 }
@@ -76,11 +89,25 @@ export default {
     margin-top: 40px;
   }
   .blog-list .blog {
+    position: relative;
     text-align: left;
     box-sizing: border-box;
     margin-bottom: 24px;
     padding: 20px 40px;
     width: 100%;
+  }
+  .blog .imgIcon {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+  }
+  .blog .imgIcon:nth-child(2) {
+    right: 40px;
+    width: 25px;
+    height: 25px;
   }
   .blog-list .blog .header {
     display: block;

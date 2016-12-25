@@ -59,6 +59,9 @@ export default {
     getValue() {
       return this.editor.getValue()
     },
+    setValue(value) {
+      return this.editor.setValue(value)
+    },
   },
 }
 </script>

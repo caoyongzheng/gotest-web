@@ -4,7 +4,7 @@
     <div class="form">
       <input class="form-title" type="text" v-model="title" placeholder="标题">
       <markdown-editor ref="editorCom"></markdown-editor>
-      <button type="button" class="add" :disabled="active" v-on:click="addBlog">新增</button>
+      <button type="button" class="submit" :disabled="active" v-on:click="editBlog">修改</button>
     </div>
   </div>
 </template>
@@ -15,8 +15,9 @@ import notify from 'notify'
 import MarkdownEditor from '../components/MarkdownEditor'
 
 export default {
-  name: 'BlogNew',
+  name: 'BlogEdit',
   mounted() {
+    this.getBlog()
   },
   data() {
     return {
@@ -25,7 +26,20 @@ export default {
     }
   },
   methods: {
-    addBlog() {
+    getBlog() {
+      const { blogId } = this.$route.params
+      fetch2(`/blog/${blogId}`)
+      .then(res => res.json())
+      .then(({ success, data }) => {
+        if (success) {
+          this.title = data.title
+          this.$refs.editorCom.setValue(data.content)
+        } else {
+          this.$router.replace('/NotFound')
+        }
+      })
+    },
+    editBlog() {
       const postData = {
         title: this.title,
         content: this.$refs.editorCom.getValue(),
@@ -36,17 +50,22 @@ export default {
       if (this.active) {
         return
       }
-      fetch2('/blog', {
-        method: 'POST',
-        body: JSON.stringify({ title: this.title, content: this.$refs.editorCom.getValue() }),
+      const { blogId } = this.$route.params
+      fetch2(`/blog/${blogId}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          id: blogId,
+          title: this.title,
+          content: this.$refs.editorCom.getValue(),
+        }),
       }).then((response) => {
         this.active = false
         return response
       })
       .then(response => response.json())
-      .then(({ success, data, msg }) => {
+      .then(({ success, msg }) => {
         if (success) {
-          this.$router.replace(`/blog/${data}`)
+          this.$router.push(`/blog/${blogId}`)
         } else {
           notify.error(msg)
         }
@@ -77,7 +96,7 @@ export default {
   .form-title {
     margin-bottom:25px;
   }
-  .add {
+  .submit {
     margin-top: 20px;
   }
 </style>

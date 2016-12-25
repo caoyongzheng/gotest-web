@@ -13,6 +13,7 @@ const routes = [
   { path: '/blog', component: require('./pages/Blog') },
   { path: '/blog/new', component: require('./pages/BlogNew') },
   { path: '/blog/:blogId', component: require('./pages/BlogView') },
+  { path: '/blog/:blogId/edit', component: require('./pages/BlogEdit') },
 ]
 
 routes.push({ path: '*', component: require('./pages/NotFound') })

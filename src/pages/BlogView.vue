@@ -3,6 +3,8 @@
     <top-header></top-header>
     <div class="body">
       <div v-if="!!blog.id" class="blog depth-1">
+        <router-link tag="img" :to="formatEditUrl(blog.id)" :src="editIcon" class="imgIcon" v-if="blog.author.id === $store.getters.userId"></router-link>
+        <router-link tag="img" :to="formatEditUrl(blog.id)" :src="deleteIcon" class="imgIcon" v-if="blog.author.id === $store.getters.userId"></router-link>
         <div class="blog-header">
           {{ blog.title }}
         </div>
@@ -24,6 +26,8 @@ import fetch2 from 'fetch2'
 import marked from 'marked'
 import 'github-markdown-css'
 import headerIcon from '../imgs/header.png'
+import editIcon from '../imgs/edit.png'
+import deleteIcon from '../imgs/delete.png'
 
 export default {
   name: 'BlogView',
@@ -33,6 +37,8 @@ export default {
   data() {
     return {
       headerIcon,
+      deleteIcon,
+      editIcon,
       blog: {},
     }
   },
@@ -44,9 +50,16 @@ export default {
       .then(({ success, data }) => {
         if (success) {
           this.blog = data
+          this.updateViews()
         } else {
           this.$router.replace('/NotFound')
         }
+      })
+    },
+    updateViews() {
+      const { blogId } = this.$route.params
+      fetch2(`/blog/${blogId}/viewtimes`, {
+        method: 'PUT',
       })
     },
     getContent(content = '') {
@@ -61,6 +74,9 @@ export default {
       }
       return `${year}${date.getMonth() + 1}月${date.getDate()}日`
     },
+    formatEditUrl(blogId) {
+      return `/blog/${blogId}/edit`
+    },
   },
 }
 </script>
@@ -74,6 +90,19 @@ export default {
     width: 900px;
     max-width: 90%;
     margin: 40px auto 20px;
+  }
+  .imgIcon {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+  }
+  .blog .imgIcon:nth-child(2) {
+    right: 40px;
+    width: 25px;
+    height: 25px;
   }
   .blog-header {
     padding: 25px 40px 20px;

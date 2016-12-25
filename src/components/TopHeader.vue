@@ -1,24 +1,29 @@
 <template lang="html">
-  <div class="wrap">
-    <nav class="top-header depth-1 theme-bgcolor-primary">
-      <div class="left">
+  <nav class="top-header depth-1 theme-bgcolor-primary">
+    <div class="left">
+      <router-link class="item" to="/">
+        首页
+      </router-link>
+      <router-link class="item" to="/blog">
+        博文
+      </router-link>
+    </div>
+    <div class="right">
+      <router-link class="item" v-if="!isLogin" to="/sign#in">
+        登录
+      </router-link>
+      <router-link class="item" v-if="!isLogin" to="/sign#up">
+        注册
+      </router-link>
+      <div class="item user" v-if="isLogin">
+        <div>{{ $store.state.user.username }}</div>
+        <ul class="depth-1">
+          <router-link to="/blog/new" tag="li">新建博文</router-link>
+          <li v-on:click="logout">注销</li>
+        </ul>
       </div>
-      <div class="right">
-        <router-link class="item" v-if="!isLogin" to="/sign#in">
-          登录
-        </router-link>
-        <router-link class="item" v-if="!isLogin" to="/sign#up">
-          注册
-        </router-link>
-        <div class="item user" v-if="isLogin">
-          <div>{{ $store.state.user.username }}</div>
-          <ul class="depth-2">
-            <li v-on:click="logout">注销</li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -40,13 +45,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .wrap {
-    position: relative;
-    height: 50px;
-    width: 100%;
+  .container {
+    height: 100%;
   }
   .top-header {
-    position: fixed;
+    position: relative;
     z-index: 999;
     top: 0;
     left: 0;
@@ -85,11 +88,14 @@ export default {
     position: absolute;
     list-style: none;
     right: 0;
-    width: 100px;
+    width: 110px;
   }
   .user ul li {
     height: 45px;
     line-height: 45px;
+  }
+  .user ul li:hover {
+    background-color: rgba(0, 0, 0, 0.06);
   }
   .user:hover ul {
     display: block;
