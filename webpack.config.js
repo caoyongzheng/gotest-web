@@ -1,8 +1,12 @@
 const webpack = require('webpack')
 const path = require('path')
+const os = require('os')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const production = process.env.NODE_ENV === 'production'
 
-const publicPath = '/assets/'
+const publicPath = '/'
+
+const HOST = production ? 'http://api.caoyongzheng.com' : `http://${os.networkInterfaces().en0[1].address}:3000`
 
 const config = {
   entry: {
@@ -67,10 +71,17 @@ const config = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development'),
+        HOST: JSON.stringify(HOST),
       },
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'app'],
+      hash: true,
+      template: path.resolve('./src/index.html'),
+      filename: path.resolve('./assets/index.html')
+    })
   ],
   debug: !production,
   postcss() {

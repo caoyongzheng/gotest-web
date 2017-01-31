@@ -1,9 +1,7 @@
 import 'whatwg-fetch'
 import notify from 'notify'
 
-const production = process.env.NODE_ENV === 'production'
-
-const Host = production ? 'http://www.caoyongzheng.com' : 'http://localhost:3000'
+const HOST = process.env.HOST
 
 function queryParams(params) {
   return Object.keys(params)
@@ -21,7 +19,7 @@ function isUrlRelative(url) {
 function fetch2(url, options = {}) {
   const urlParse = document.createElement('a')
   if (isUrlRelative(url)) {
-    urlParse.href = `${Host}${url}`
+    urlParse.href = `${HOST}${url}`
   } else {
     urlParse.href = url
   }

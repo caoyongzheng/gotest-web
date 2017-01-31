@@ -112,8 +112,7 @@ export default {
         .then(response => response.json())
         .then((data) => {
           if (data.success) {
-            localStorage.setItem('token', data.token)
-            this.$store.dispatch('getUser')
+            this.$store.dispatch('login')
             .then(() => {
               if (history.length <= 2) {
                 this.$router.replace('/')

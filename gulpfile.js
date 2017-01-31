@@ -4,7 +4,6 @@ const del = require("del")
 const path = require('path')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const open = require("open")
 
 const webpackConfig = require('./webpack.config.js')
@@ -39,12 +38,7 @@ gulp.task('webpack-dev-server', function(callback) {
 gulp.task("webpack:build", function(callback) {
   webpackConfig.plugins.push(
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-    new HtmlWebpackPlugin({
-      chunks: ['vendor', 'app'],
-      template: path.resolve('./src/template.html'),
-      filename: path.resolve('./assets/index.html')
-    })
+    new webpack.optimize.UglifyJsPlugin()
   )
   webpack(webpackConfig, function(err, stats) {
     if(err) throw new gutil.PluginError('webpack', err)
