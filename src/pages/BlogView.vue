@@ -23,7 +23,7 @@
 
 <script>
 import fetch2 from 'fetch2'
-import marked from 'marked'
+import marked from 'marked2'
 import 'github-markdown-css'
 import headerIcon from '../imgs/header.png'
 import editIcon from '../imgs/edit.png'

@@ -35,11 +35,11 @@ class Notify {
   }
   remove = (target, index, duration = 3000) => {
     setTimeout(() => {
-      // target.classList.add('hide')
-      // setTimeout(() => {
-      //   this.container.removeChild(target)
-      //   this.targets[index] = false
-      // }, 500)
+      target.classList.add('hide')
+      setTimeout(() => {
+        this.container.removeChild(target)
+        this.targets[index] = false
+      }, 500)
     }, duration)
   }
 }

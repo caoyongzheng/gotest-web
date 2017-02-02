@@ -34,6 +34,7 @@ function fetch2(url, options = {}) {
     },
     ...others,
   }
+
   if (query) {
     urlParse.search += `${urlParse.search ? '&' : ''}${queryParams(query)}`
   }

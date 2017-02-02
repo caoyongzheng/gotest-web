@@ -16,7 +16,7 @@
         <input type="text" name="username" v-model="signin.username" placeholder="用户名">
       </div>
       <div class="form-item">
-        <input type="text" name="password" v-model="signin.password" placeholder="密码">
+        <input type="password" name="password" v-model="signin.password" placeholder="密码">
       </div>
     </section>
     <section class="body up" :class="{ hide: isSignIn }">
@@ -24,10 +24,10 @@
         <input type="text" name="username" v-model="signup.username" placeholder="用户名">
       </div>
       <div class="form-item">
-        <input type="text" name="password" v-model="signup.password" placeholder="密码">
+        <input type="password" name="password" v-model="signup.password" placeholder="密码">
       </div>
       <div class="form-item">
-        <input type="text" name="password" v-model="signup.password2" placeholder="确认密码">
+        <input type="password" name="password" v-model="signup.password2" placeholder="确认密码">
       </div>
     </section>
     <section class="footer">

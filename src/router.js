@@ -3,8 +3,11 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-// const Paper = resolve => require.ensure(['./routes/Paper'], (require) => {
-//   resolve(require('./routes/Paper'))
+// const BlogNew = resolve => require.ensure(['./pages/BlogNew'], (require) => {
+//   resolve(require('./pages/BlogNew'))
+// })
+// const BlogEdit = resolve => require.ensure(['./pages/BlogEdit'], (require) => {
+//   resolve(require('./pages/BlogEdit'))
 // })
 
 const routes = [
