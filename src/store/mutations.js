@@ -5,4 +5,7 @@ export default {
   setSignModal(state, signStatus) {
     state.signStatus = signStatus
   },
+  setHeaderIcon(state, headerIcon) {
+    state.user.headerIcon = headerIcon
+  },
 }

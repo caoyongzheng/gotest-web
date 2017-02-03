@@ -31,8 +31,8 @@
       </div>
     </section>
     <section class="footer">
-      <button type="button" v-if="isSignIn" v-on:click="handleSignIn" :disabled="signin.active">登录</button>
-      <button type="button" v-if="!isSignIn" v-on:click="handleSignUp" :disabled="signup.active">注册</button>
+      <button type="button" class="btn btn-primary btn-fullwidth" v-if="isSignIn" v-on:click="handleSignIn" :disabled="signin.active">登录</button>
+      <button type="button" class="btn btn-primary btn-fullwidth" v-if="!isSignIn" v-on:click="handleSignUp" :disabled="signup.active">注册</button>
     </section>
   </section>
 </template>
@@ -62,7 +62,7 @@ export default {
     handleSignIn() {
       if (this.checkSignInData()) {
         this.signin.active = true
-        fetch2('/api/user/signin', {
+        fetch2('/signin', {
           method: 'POST',
           body: JSON.stringify({ username: this.signin.username, password: this.signin.password }),
         })
@@ -101,7 +101,7 @@ export default {
     handleSignUp() {
       if (this.checkSignUpData()) {
         this.signup.active = true
-        fetch2('/api/user/signup', {
+        fetch2('/signup', {
           method: 'POST',
           body: JSON.stringify({ username: this.signup.username, password: this.signup.password }),
         })

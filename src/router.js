@@ -3,13 +3,6 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-// const BlogNew = resolve => require.ensure(['./pages/BlogNew'], (require) => {
-//   resolve(require('./pages/BlogNew'))
-// })
-// const BlogEdit = resolve => require.ensure(['./pages/BlogEdit'], (require) => {
-//   resolve(require('./pages/BlogEdit'))
-// })
-
 const routes = [
   { path: '/', component: require('./pages/Index') },
   { path: '/sign', component: require('./pages/Sign') },

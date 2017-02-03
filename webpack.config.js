@@ -15,7 +15,7 @@ const config = {
   },
   output: {
     filename: "[name].js",
-    chunkFilename: "[id].chunk.js",
+    chunkFilename: "[id]-[hash].chunk.js",
     path: path.resolve('./assets'),
     publicPath,
   },

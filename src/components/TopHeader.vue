@@ -16,8 +16,15 @@
         <router-link class="item" v-if="!isLogin" to="/sign#up">
           注册
         </router-link>
+        <div class="item" v-if="isLogin">
+          <div class="avatar" v-bind:style="avatarStyle">
+            <input type="file" v-on:change="uploadAvatar">
+          </div>
+        </div>
         <div class="item user" v-if="isLogin">
-          <div>{{ $store.state.user.username }}</div>
+          <div>
+            <span>{{ $store.state.user.username }}</span>
+          </div>
           <ul class="depth-1">
             <router-link to="/blog/new" tag="li">新建博文</router-link>
             <li v-on:click="logout">注销</li>
@@ -29,6 +36,8 @@
 </template>
 
 <script>
+import fetch2 from 'fetch2'
+import notify from 'notify'
 
 export default {
   name: 'TopHeader',
@@ -36,10 +45,54 @@ export default {
     logout() {
       this.$store.dispatch('logout')
     },
+    uploadAvatar(e) {
+      const file = e.target.files[0]
+      if (file) {
+        // check file type
+        if (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'iamge/gif') {
+          const form = new FormData()
+          form.append('image', file)
+          this.uploading = true
+          fetch('http://image.caoyongzheng.com', {
+            method: 'post',
+            body: form,
+          }).then((res) => {
+            this.uploading = false
+            return res.json()
+          }).then(({ success, name, error }) => {
+            if (success) {
+              this.setUserHeaderIcon(`http://image.caoyongzheng.com?n=${name}`)
+            } else {
+              notify.error(error)
+            }
+          })
+        } else {
+          notify.warn(`not support type ${file.type}`)
+        }
+      }
+    },
+    setUserHeaderIcon(url) {
+      fetch2('/user/headerIcon', {
+        method: 'PUT',
+        body: JSON.stringify({ headerIcon: url }),
+      })
+      .then(res => res.json())
+      .then(({ success }) => {
+        if (success) {
+          this.$store.commit('setHeaderIcon', url)
+        }
+      })
+    },
   },
   computed: {
     isLogin() {
       return this.$store.getters.isLogin
+    },
+    avatarStyle() {
+      if (this.$store.state.user.headerIcon) {
+        return { backgroundImage: `url(${this.$store.state.user.headerIcon})` }
+      }
+      return { color: 'red' }
     },
   },
 }
@@ -57,7 +110,6 @@ export default {
     left: 0;
     right: 0;
     height: 50px;
-    line-height: 50px;
     /*width: 100%;*/
     background-color: rgb(0, 188, 212);
   }
@@ -83,15 +135,38 @@ export default {
     margin-left: 10px;
   }
   .item {
+    line-height: 50px;
+    height: 100%;
+    width: auto;
     position: relative;
     cursor: pointer;
     display: inline-block;
   }
   .user div {
-    max-width: 120px;
+    height: 100%;
+    max-width: 100px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
+  }
+  .item .avatar {
+    position: relative;
+    margin-top: 7px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url('../imgs/header.png');
+  }
+  .avatar input {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
   }
   .user ul {
     display: none;
@@ -103,6 +178,9 @@ export default {
     list-style: none;
     right: 0;
     width: 110px;
+  }
+  .item.user {
+    margin-left: 2px;
   }
   .user ul li {
     height: 45px;

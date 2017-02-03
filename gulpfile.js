@@ -4,6 +4,7 @@ const del = require("del")
 const path = require('path')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
+const os = require('os')
 const open = require("open")
 
 const webpackConfig = require('./webpack.config.js')
@@ -21,7 +22,7 @@ gulp.task('webpack-dev-server', function(callback) {
   )
   const host = webpackConfig.devServer.host
   const port = webpackConfig.devServer.port
-  const url = `http://localhost:${port}`
+  const url = `http://${os.networkInterfaces().en0[1].address}:${port}`
   webpackConfig.entry.app.push(
     `webpack-dev-server/client?${url}`,
     'webpack/hot/only-dev-server'

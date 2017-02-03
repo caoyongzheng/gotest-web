@@ -4,7 +4,7 @@
     <div class="form">
       <input class="form-title" type="text" v-model="title" placeholder="标题">
       <markdown-editor ref="editorCom"></markdown-editor>
-      <button type="button" class="submit" :disabled="active" v-on:click="editBlog">修改</button>
+      <button type="button" class="btn btn-primary btn-fullwidth submit" :disabled="active" v-on:click="editBlog">修改</button>
     </div>
   </div>
 </template>

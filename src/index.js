@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import 'normalize.css'
 import './index.css'
 import router from './router'
 import App from './App'

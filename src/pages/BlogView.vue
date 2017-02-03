@@ -3,12 +3,17 @@
     <top-header></top-header>
     <div class="body">
       <div v-if="!!blog.id" class="blog depth-1">
-        <router-link tag="img" :to="formatEditUrl(blog.id)" :src="editIcon" class="imgIcon" v-if="blog.author.id === $store.getters.userId"></router-link>
-        <router-link tag="img" :to="formatEditUrl(blog.id)" :src="deleteIcon" class="imgIcon" v-if="blog.author.id === $store.getters.userId"></router-link>
+        <router-link :to="formatEditUrl(blog.id)" class="imgIcon editIcon" v-if="blog.author.id === $store.getters.userId"></router-link>
+        <span
+          :to="formatEditUrl(blog.id)"
+          class="imgIcon deleteIcon"
+          v-if="blog.author.id === $store.getters.userId"
+          v-on:click="delBlog"
+        />
         <div class="blog-header">
           {{ blog.title }}
         </div>
-        <div class="blog-body markdown-body" v-html="getContent(blog.content)">
+        <div class="blog-body markdown-body" v-html="html">
         </div>
         <div class="blog-footer">
           <img :src="(blog.author.headerIcon) || headerIcon" class="avatar" alt="作者头像">
@@ -18,28 +23,27 @@
         </div>
       </div>
     </div>
+    <BlogDeleteModal ref="blogDeleteModal" />
   </div>
 </template>
 
 <script>
 import fetch2 from 'fetch2'
-import marked from 'marked2'
-import 'github-markdown-css'
+import marked2 from 'marked2'
 import headerIcon from '../imgs/header.png'
-import editIcon from '../imgs/edit.png'
-import deleteIcon from '../imgs/delete.png'
+import BlogDeleteModal from '../components/BlogDeleteModal'
 
 export default {
   name: 'BlogView',
+  components: { BlogDeleteModal },
   created() {
     this.fetchBlog()
   },
   data() {
     return {
       headerIcon,
-      deleteIcon,
-      editIcon,
       blog: {},
+      html: '',
     }
   },
   methods: {
@@ -50,6 +54,7 @@ export default {
       .then(({ success, data }) => {
         if (success) {
           this.blog = data
+          this.html = marked2(data.content)
           this.updateViews()
         } else {
           this.$router.replace('/NotFound')
@@ -62,9 +67,6 @@ export default {
         method: 'PUT',
       })
     },
-    getContent(content = '') {
-      return marked(content)
-    },
     getUpdate(update) {
       const date = new Date(update)
       const now = new Date()
@@ -73,6 +75,9 @@ export default {
         year = `${now.getYear()}年`
       }
       return `${year}${date.getMonth() + 1}月${date.getDate()}日`
+    },
+    delBlog() {
+      this.$refs.blogDeleteModal.show(this.blog.id)
     },
     formatEditUrl(blogId) {
       return `/blog/${blogId}/edit`
@@ -92,12 +97,20 @@ export default {
     margin: 40px auto 20px;
   }
   .imgIcon {
+    display: inline-block;
     cursor: pointer;
     position: absolute;
     top: 10px;
     right: 10px;
     width: 25px;
     height: 25px;
+    background-size: 100% 100%;
+  }
+  .imgIcon.editIcon {
+    background-image: url('../imgs/edit.png');
+  }
+  .imgIcon.deleteIcon {
+    background-image: url('../imgs/delete.png');
   }
   .blog .imgIcon:nth-child(2) {
     right: 40px;

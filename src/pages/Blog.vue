@@ -2,8 +2,12 @@
   <container>
     <div class="blog-list">
       <div v-for="b in blogs" class="blog depth-1">
-        <router-link tag="img" :to="formatEditUrl(b.id)" :src="editIcon" class="imgIcon" v-if="b.author.id === $store.getters.userId"></router-link>
-        <router-link tag="img" :to="formatEditUrl(b.id)" :src="deleteIcon" class="imgIcon" v-if="b.author.id === $store.getters.userId"></router-link>
+        <router-link :to="formatEditUrl(b.id)" class="imgIcon editIcon" v-if="b.author.id === $store.getters.userId"></router-link>
+        <span
+          class="imgIcon deleteIcon"
+          v-if="b.author.id === $store.getters.userId"
+          v-on:click="delBlog(b.id)"
+        />
         <router-link :to="b.id" append class="header">
           {{ b.title }}
         </router-link>
@@ -18,6 +22,7 @@
         </div>
       </div>
     </div>
+    <BlogDeleteModal ref="blogDeleteModal" />
   </container>
 </template>
 
@@ -28,10 +33,11 @@ import container from '../components/Container'
 import headerIcon from '../imgs/header.png'
 import editIcon from '../imgs/edit.png'
 import deleteIcon from '../imgs/delete.png'
+import BlogDeleteModal from '../components/BlogDeleteModal'
 
 export default {
   name: 'Blog',
-  components: { container },
+  components: { container, BlogDeleteModal },
   mounted() {
     this.getBlogs()
   },
@@ -76,6 +82,11 @@ export default {
     formatEditUrl(blogId) {
       return `/blog/${blogId}/edit`
     },
+    delBlog(id) {
+      this.$refs.blogDeleteModal.show(id, () => {
+        this.getBlogs()
+      })
+    },
   },
 }
 </script>
@@ -97,12 +108,20 @@ export default {
     width: 100%;
   }
   .blog .imgIcon {
+    display: inline-block;
     cursor: pointer;
     position: absolute;
     top: 10px;
     right: 10px;
     width: 25px;
     height: 25px;
+    background-size: 100% 100%;
+  }
+  .imgIcon.editIcon {
+    background-image: url('../imgs/edit.png');
+  }
+  .imgIcon.deleteIcon {
+    background-image: url('../imgs/delete.png');
   }
   .blog .imgIcon:nth-child(2) {
     right: 40px;

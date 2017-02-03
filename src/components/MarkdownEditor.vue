@@ -15,8 +15,7 @@
 import 'codemirror/lib/codemirror.css'
 import CodeMirror from 'codemirror/lib/codemirror'
 import 'codemirror/mode/markdown/markdown'
-import marked from 'marked2'
-import 'github-markdown-css'
+import marked2 from 'marked2'
 import notify from 'notify'
 
 export default {
@@ -49,7 +48,7 @@ export default {
   methods: {
     toggle() {
       if (this.isEdit) {
-        this.html = marked(this.getValue() || '')
+        this.html = marked2(this.getValue() || '')
         this.isEdit = false
         this.codemirrorEl.classList.add('hide')
       } else {
