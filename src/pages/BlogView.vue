@@ -29,7 +29,8 @@
 
 <script>
 import fetch2 from 'fetch2'
-import marked2 from 'marked2'
+import 'github-markdown-css'
+import 'highlight.js/styles/default.css'
 import headerIcon from '../imgs/header.png'
 import BlogDeleteModal from '../components/BlogDeleteModal'
 
@@ -49,12 +50,12 @@ export default {
   methods: {
     fetchBlog() {
       const { blogId } = this.$route.params
-      fetch2(`/blog/${blogId}`)
+      fetch2(`/blog/${blogId}?marked=true`)
       .then(res => res.json())
       .then(({ success, data }) => {
         if (success) {
           this.blog = data
-          this.html = marked2(data.content)
+          this.html = data.content
           this.updateViews()
         } else {
           this.$router.replace('/NotFound')
