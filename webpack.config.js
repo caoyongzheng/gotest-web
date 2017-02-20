@@ -6,7 +6,7 @@ const production = process.env.NODE_ENV === 'production'
 
 const publicPath = '/'
 
-const HOST = production ? 'http://api.caoyongzheng.com' : `http://${os.networkInterfaces().en0[1].address}:3000`
+const HOST = production ? 'https://api.caoyongzheng.com' : `http://${os.networkInterfaces().en0[1].address}:3000`
 
 const config = {
   entry: {
