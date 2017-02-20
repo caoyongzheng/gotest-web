@@ -16,7 +16,7 @@
         <div class="blog-body markdown-body" v-html="html">
         </div>
         <div class="blog-footer">
-          <img :src="(blog.author.headerIcon) || headerIcon" class="avatar" alt="作者头像">
+          <img :src="authorHeaderIcon || headerIcon" class="avatar" alt="作者头像">
           <p>{{ blog.author.username }}</p>
           <p>浏览 <span>{{ blog.views }}</span></p>
           <p>更新时间 <span>{{ getUpdate(blog.update) }}</span></p>
@@ -82,6 +82,15 @@ export default {
     },
     formatEditUrl(blogId) {
       return `/blog/${blogId}/edit`
+    },
+  },
+  computed: {
+    authorHeaderIcon() {
+      const icon = this.blog.author ? this.blog.author.headerIcon : ''
+      if (icon && icon.startsWith('http://')) {
+        return icon.replace('http://', 'https://')
+      }
+      return icon
     },
   },
 }

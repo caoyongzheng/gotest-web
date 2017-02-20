@@ -15,7 +15,7 @@
           {{ formatContent(b.content) }}
         </div>
         <div class="footer">
-          <img class="avatar" :src="b.author.headerIcon || headerIcon" alt="头像">
+          <img class="avatar" :src="formatHeaderIcon(b.author.headerIcon) || headerIcon" alt="头像">
           <p>{{ b.author.username }}</p>
           <p>浏览 <span>{{ b.views }}</span></p>
           <p>更新时间 <span>{{ formatUpdate(b.update) }}</span></p>
@@ -81,6 +81,12 @@ export default {
     },
     formatEditUrl(blogId) {
       return `/blog/${blogId}/edit`
+    },
+    formatHeaderIcon(icon) {
+      if (icon && icon.startsWith('http://')) {
+        return icon.replace('http://', 'https://')
+      }
+      return icon
     },
     delBlog(id) {
       this.$refs.blogDeleteModal.show(id, () => {

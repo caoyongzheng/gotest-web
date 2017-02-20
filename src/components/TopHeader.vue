@@ -53,7 +53,7 @@ export default {
           const form = new FormData()
           form.append('image', file)
           this.uploading = true
-          fetch('http://image.caoyongzheng.com', {
+          fetch('https://image.caoyongzheng.com', {
             method: 'post',
             body: form,
           }).then((res) => {
@@ -61,7 +61,7 @@ export default {
             return res.json()
           }).then(({ success, name, error }) => {
             if (success) {
-              this.setUserHeaderIcon(`http://image.caoyongzheng.com?n=${name}`)
+              this.setUserHeaderIcon(`https://image.caoyongzheng.com?n=${name}`)
             } else {
               notify.error(error)
             }
@@ -89,8 +89,12 @@ export default {
       return this.$store.getters.isLogin
     },
     avatarStyle() {
-      if (this.$store.state.user.headerIcon) {
-        return { backgroundImage: `url(${this.$store.state.user.headerIcon})` }
+      const { headerIcon } = this.$store.state.user
+      if (headerIcon) {
+        if (headerIcon.startsWith('https://')) {
+          return { backgroundImage: `url(${headerIcon})` }
+        }
+        return { backgroundImage: `url(${headerIcon.replace('http://', 'https://')})` }
       }
       return { color: 'red' }
     },
