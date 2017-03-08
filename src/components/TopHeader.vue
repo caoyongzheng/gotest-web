@@ -104,17 +104,13 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .container {
-    height: 100%;
-  }
   .top-header {
-    position: relative;
+    position: fixed;
     z-index: 999;
     top: 0;
     left: 0;
     right: 0;
     height: 50px;
-    /*width: 100%;*/
     background-color: rgb(0, 188, 212);
   }
   .m-wrap {

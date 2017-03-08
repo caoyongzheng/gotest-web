@@ -1,17 +1,19 @@
 <template lang="html">
-  <div class="container">
-    <top-header />
+  <Container>
     <section class="body">
       <div class="links">
         <router-link to="blog" class="link depth-1">博文</router-link>
       </div>
     </section>
-  </div>
+  </Container>
 </template>
 
 <script>
+import Container from '../components/Container'
+
 export default {
   name: 'Index',
+  components: { Container },
 }
 </script>
 

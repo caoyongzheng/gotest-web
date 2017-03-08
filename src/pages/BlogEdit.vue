@@ -1,18 +1,18 @@
 <template lang="html">
-  <div class="container">
-    <top-header></top-header>
+  <Container>
     <div class="form">
       <input class="form-title" type="text" v-model="title" placeholder="标题">
       <markdown-editor ref="editorCom"></markdown-editor>
       <button type="button" class="btn btn-primary btn-fullwidth submit" :disabled="active" v-on:click="editBlog">修改</button>
     </div>
-  </div>
+  </Container>
 </template>
 
 <script>
 import fetch2 from 'fetch2'
 import notify from 'notify'
 import MarkdownEditor from '../components/MarkdownEditor'
+import Container from '../components/Container'
 
 export default {
   name: 'BlogEdit',
@@ -83,7 +83,7 @@ export default {
       return true
     },
   },
-  components: { 'markdown-editor': MarkdownEditor },
+  components: { 'markdown-editor': MarkdownEditor, Container },
 }
 </script>
 

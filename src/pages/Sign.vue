@@ -1,15 +1,18 @@
 <template lang="html">
-  <div class="container">
-    <SignForm />
-  </div>
+  <Container>
+    <div class="container">
+      <SignForm />
+    </div>
+  </Container>
 </template>
 
 <script>
 import SignForm from '../components/SignForm'
+import Container from '../components/Container'
 
 export default {
   name: 'SignIn',
-  components: { SignForm },
+  components: { SignForm, Container },
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template lang="html">
-  <container>
+  <Container>
     <div class="blog-list">
       <div v-for="b in blogs" class="blog depth-1">
         <router-link :to="formatEditUrl(b.id)" class="imgIcon editIcon" v-if="b.author.id === $store.getters.userId"></router-link>
@@ -23,21 +23,21 @@
       </div>
     </div>
     <BlogDeleteModal ref="blogDeleteModal" />
-  </container>
+  </Container>
 </template>
 
 <script>
 import fetch2 from 'fetch2'
 import notify from 'notify'
-import container from '../components/Container'
 import headerIcon from '../imgs/header.png'
 import editIcon from '../imgs/edit.png'
 import deleteIcon from '../imgs/delete.png'
 import BlogDeleteModal from '../components/BlogDeleteModal'
+import Container from '../components/Container'
 
 export default {
   name: 'Blog',
-  components: { container, BlogDeleteModal },
+  components: { BlogDeleteModal, Container },
   mounted() {
     this.getBlogs()
   },

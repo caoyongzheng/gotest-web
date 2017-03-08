@@ -1,28 +1,19 @@
 <template lang="html">
-  <div class="container">
-    <top-header></top-header>
-    <div class="body">
-      <slot></slot>
-    </div>
+  <div class="conatiner">
+    <div class="placeholder"></div>
+    <slot></slot>
   </div>
 </template>
 
 <script>
-import TopHeader from './TopHeader'
-
 export default {
-  name: 'container',
-  components: { 'top-header': TopHeader },
+  name: 'Conatiner'
 }
 </script>
 
 <style lang="css" scoped>
-  .container {
-    display: flex;
-    flex-direction: column;
-  }
-  .body {
-    flex: 1;
-    overflow: auto;
+  .placeholder {
+    height: 50px;
+    width: 100%;
   }
 </style>

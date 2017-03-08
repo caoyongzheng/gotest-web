@@ -60,7 +60,7 @@ const config = {
     alias: {
       fetch2: path.resolve('./src/utils/fetch2.js'),
       notify: path.resolve('./src/utils/notify.js'),
-      marked2: path.resolve('./src/utils/Marked.js'),
+      marked2: path.resolve('./src/utils/marked2.js'),
     },
   },
   plugins: [

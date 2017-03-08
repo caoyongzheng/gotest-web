@@ -15,8 +15,6 @@
 import 'codemirror/lib/codemirror.css'
 import CodeMirror from 'codemirror/lib/codemirror'
 import 'codemirror/mode/markdown/markdown'
-import 'github-markdown-css'
-import 'highlight.js/styles/default.css'
 import marked2 from 'marked2'
 import notify from 'notify'
 
@@ -50,14 +48,7 @@ export default {
   methods: {
     toggle() {
       if (this.isEdit) {
-        marked2(this.getValue())
-        .then(({ success, error, data }) => {
-          if (success) {
-            this.html = data
-          } else {
-            notify.error(error)
-          }
-        })
+        this.html = marked2(this.getValue())
         this.isEdit = false
         this.codemirrorEl.classList.add('hide')
       } else {

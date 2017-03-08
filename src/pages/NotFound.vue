@@ -5,8 +5,11 @@
 </template>
 
 <script>
+import Container from '../components/Container'
+
 export default {
   name: 'NotFound',
+  components: { Container },
 }
 </script>
 

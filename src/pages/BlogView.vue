@@ -1,6 +1,5 @@
 <template lang="html">
-  <div class="container">
-    <top-header></top-header>
+  <div>
     <div class="body">
       <div v-if="!!blog.id" class="blog depth-1">
         <router-link :to="formatEditUrl(blog.id)" class="imgIcon editIcon" v-if="blog.author.id === $store.getters.userId"></router-link>
@@ -29,14 +28,14 @@
 
 <script>
 import fetch2 from 'fetch2'
-import 'github-markdown-css'
-import 'highlight.js/styles/default.css'
+import marked2 from 'marked2'
 import headerIcon from '../imgs/header.png'
 import BlogDeleteModal from '../components/BlogDeleteModal'
+import Container from '../components/Container'
 
 export default {
   name: 'BlogView',
-  components: { BlogDeleteModal },
+  components: { BlogDeleteModal, Container },
   created() {
     this.fetchBlog()
   },
@@ -50,12 +49,12 @@ export default {
   methods: {
     fetchBlog() {
       const { blogId } = this.$route.params
-      fetch2(`/blog/${blogId}?marked=true`)
+      fetch2(`/blog/${blogId}`)
       .then(res => res.json())
       .then(({ success, data }) => {
         if (success) {
           this.blog = data
-          this.html = data.content
+          this.html = marked2(data.content)
           this.updateViews()
         } else {
           this.$router.replace('/NotFound')
