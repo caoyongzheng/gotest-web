@@ -17,29 +17,40 @@ gulp.task('clean:assets', function (cb) {
 
 
 gulp.task('webpack-dev-server', function(callback) {
-  webpackConfig.plugins.push(
-    new webpack.HotModuleReplacementPlugin()
-  )
-  const host = webpackConfig.devServer.host
-  const port = webpackConfig.devServer.port
-  const url = `http://${os.networkInterfaces().en0[1].address}:${port}`
-  webpackConfig.entry.app.push(
-    `webpack-dev-server/client?${url}`,
-    'webpack/hot/only-dev-server'
-  )
-  const compiler = webpack(webpackConfig)
-  new WebpackDevServer(compiler, webpackConfig.devServer).listen(port, host, function(err) {
-    if(err) throw new gutil.PluginError('webpack-dev-server', err)
-    gutil.log('[webpack-dev-server]', url)
-    open(url)
-    callback()
-  })
+  try {
+    webpackConfig.plugins.push(
+      new webpack.HotModuleReplacementPlugin()
+    )
+    const host = webpackConfig.devServer.host
+    const port = webpackConfig.devServer.port
+    const url = `http://${os.networkInterfaces().en0[1].address}:${port}`
+    webpackConfig.entry.app.push(
+      `webpack-dev-server/client?${url}`,
+      'webpack/hot/only-dev-server'
+    )
+    const compiler = webpack(webpackConfig)
+    new WebpackDevServer(compiler, webpackConfig.devServer).listen(port, host, function(err) {
+      if(err) throw new gutil.PluginError('webpack-dev-server', err)
+      gutil.log('[webpack-dev-server]', url)
+      open(url)
+      callback()
+    })
+  } catch (e) {
+    console.log(e);
+  }
 })
 
 gulp.task("webpack:build", function(callback) {
   webpackConfig.plugins.push(
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      compress: {
+        warnings: true
+      }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
+    })
   )
   webpack(webpackConfig, function(err, stats) {
     if(err) throw new gutil.PluginError('webpack', err)

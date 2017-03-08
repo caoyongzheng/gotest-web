@@ -15,7 +15,6 @@
 import 'codemirror/lib/codemirror.css'
 import CodeMirror from 'codemirror/lib/codemirror'
 import 'codemirror/mode/markdown/markdown'
-import marked2 from 'marked2'
 import notify from 'notify'
 
 export default {
@@ -48,9 +47,14 @@ export default {
   methods: {
     toggle() {
       if (this.isEdit) {
-        this.html = marked2(this.getValue())
-        this.isEdit = false
-        this.codemirrorEl.classList.add('hide')
+        System.import('marked2').then((m) => {
+          this.html = m.default(this.getValue())
+          this.isEdit = false
+          this.codemirrorEl.classList.add('hide')
+        })
+        .catch((e) => {
+          notify.error(e)
+        })
       } else {
         this.isEdit = true
         this.codemirrorEl.classList.remove('hide')

@@ -18,10 +18,9 @@ export default {
 
 <style lang="css" scoped>
   .container {
-    width: 100%;
-    height: 100%;
+    padding-top: 100px;
+    margin: auto;
     display: flex;
-    align-items: center;
     justify-content: center;
   }
 </style>

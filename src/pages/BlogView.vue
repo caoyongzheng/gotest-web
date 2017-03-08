@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <Container>
     <div class="body">
       <div v-if="!!blog.id" class="blog depth-1">
         <router-link :to="formatEditUrl(blog.id)" class="imgIcon editIcon" v-if="blog.author.id === $store.getters.userId"></router-link>
@@ -23,12 +23,12 @@
       </div>
     </div>
     <BlogDeleteModal ref="blogDeleteModal" />
-  </div>
+  </Container>
 </template>
 
 <script>
 import fetch2 from 'fetch2'
-import marked2 from 'marked2'
+import notify from 'notify'
 import headerIcon from '../imgs/header.png'
 import BlogDeleteModal from '../components/BlogDeleteModal'
 import Container from '../components/Container'
@@ -54,8 +54,13 @@ export default {
       .then(({ success, data }) => {
         if (success) {
           this.blog = data
-          this.html = marked2(data.content)
-          this.updateViews()
+          System.import('marked2').then((m) => {
+            this.html = m.default(data.content)
+            this.updateViews()
+          })
+          .catch((e) => {
+            notify.error(e)
+          })
         } else {
           this.$router.replace('/NotFound')
         }

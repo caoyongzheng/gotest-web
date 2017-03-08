@@ -1,9 +1,11 @@
 <template lang="html">
-  <div class="form">
-    <input class="form-title" type="text" v-model="title" placeholder="标题">
-    <markdown-editor ref="editorCom"></markdown-editor>
-    <button type="button" class="btn btn-primary btn-fullwidth add" :disabled="active" v-on:click="addBlog">新增</button>
-  </div>
+  <Container>
+    <div class="form">
+      <input class="form-title" type="text" v-model="title" placeholder="标题">
+      <markdown-editor ref="editorCom"></markdown-editor>
+      <button type="button" class="btn btn-primary btn-fullwidth add" :disabled="active" v-on:click="addBlog">新增</button>
+    </div>
+  </Container>
 </template>
 
 <script>
