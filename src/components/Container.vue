@@ -1,6 +1,5 @@
 <template lang="html">
   <div class="conatiner">
-    <div class="placeholder"></div>
     <slot></slot>
   </div>
 </template>
@@ -12,8 +11,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .placeholder {
-    height: 50px;
-    width: 100%;
+  .conatiner {
+    padding-top: 50px;
   }
 </style>

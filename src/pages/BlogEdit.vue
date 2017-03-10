@@ -2,7 +2,7 @@
   <Container>
     <div class="form">
       <input class="form-title" type="text" v-model="title" placeholder="标题">
-      <markdown-editor ref="editorCom"></markdown-editor>
+      <markdown-editor :value="value" v-on:requestValueChange="onValue"></markdown-editor>
       <button type="button" class="btn btn-primary btn-fullwidth submit" :disabled="active" v-on:click="editBlog">修改</button>
     </div>
   </Container>
@@ -11,8 +11,9 @@
 <script>
 import fetch2 from 'fetch2'
 import notify from 'notify'
-import MarkdownEditor from '../components/MarkdownEditor'
 import Container from '../components/Container'
+
+const MarkdownEditor = () => import('../components/MarkdownEditor')
 
 export default {
   name: 'BlogEdit',
@@ -23,6 +24,7 @@ export default {
     return {
       title: '',
       active: false,
+      value: '',
     }
   },
   methods: {
@@ -33,7 +35,7 @@ export default {
       .then(({ success, data }) => {
         if (success) {
           this.title = data.title
-          this.$refs.editorCom.setValue(data.content)
+          this.value = data.content
         } else {
           this.$router.replace('/NotFound')
         }
@@ -42,7 +44,7 @@ export default {
     editBlog() {
       const postData = {
         title: this.title,
-        content: this.$refs.editorCom.getValue(),
+        content: this.value,
       }
       if (!this.verifyPostData(postData)) {
         return
@@ -55,8 +57,7 @@ export default {
         method: 'PUT',
         body: JSON.stringify({
           id: blogId,
-          title: this.title,
-          content: this.$refs.editorCom.getValue(),
+          ...postData,
         }),
       }).then((response) => {
         this.active = false
@@ -81,6 +82,9 @@ export default {
         return false
       }
       return true
+    },
+    onValue(v) {
+      this.value = v
     },
   },
   components: { 'markdown-editor': MarkdownEditor, Container },

@@ -11,8 +11,9 @@
 <script>
 import fetch2 from 'fetch2'
 import notify from 'notify'
-import MarkdownEditor from '../components/MarkdownEditor'
 import Container from '../components/Container'
+
+const MarkdownEditor = () => import('../components/MarkdownEditor')
 
 export default {
   name: 'BlogNew',

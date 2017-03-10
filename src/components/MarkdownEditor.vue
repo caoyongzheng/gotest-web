@@ -36,6 +36,15 @@ export default {
     this.editor.on('drop', (editor, e) => {
       this.imageUpload(e.dataTransfer.files)
     })
+    this.editor.on('change', (editor, obj) => {
+      if (obj.origin !== 'setValue') {
+        this.$emit('requestValueChange', editor.getValue())
+      }
+    })
+    this.editor.setValue(this.value)
+  },
+  props: {
+    value: String,
   },
   data() {
     return {
@@ -48,7 +57,7 @@ export default {
     toggle() {
       if (this.isEdit) {
         System.import('marked2').then((m) => {
-          this.html = m.default(this.getValue())
+          this.html = m.default(this.value)
           this.isEdit = false
           this.codemirrorEl.classList.add('hide')
         })
@@ -81,7 +90,7 @@ export default {
             return res.json()
           }).then(({ success, name, error }) => {
             if (success) {
-              this.setValue(`${this.getValue()}![描述](http://image.caoyongzheng.com?n=${name})`)
+              this.$emit('requestValueChange', `${this.getValue()}![描述](http://image.caoyongzheng.com?n=${name})`)
             } else {
               notify.error(error)
             }
@@ -91,18 +100,21 @@ export default {
         }
       }
     },
-    getValue() {
-      return this.editor.getValue()
-    },
-    setValue(value) {
-      return this.editor.setValue(value)
-    },
   },
   computed: {
     toggleClass() {
       return this.isEdit ? 'previewIcon' : 'editIcon'
     },
   },
+  watch: {
+    value(v) {
+      if (this.editor.getValue() !== v) {
+        this.editor.setValue(v)
+        this.editor.focus()
+        this.editor.setCursor({ line: this.editor.lineCount(), ch: this.editor.lastLine() })
+      }
+    }
+  }
 }
 </script>
 

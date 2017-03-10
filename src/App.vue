@@ -18,8 +18,10 @@ export default {
 
 <style lang="css" scoped>
   .shell {
+
   }
   .main {
-
+    display: inline-block;
+    width: 100%;
   }
 </style>

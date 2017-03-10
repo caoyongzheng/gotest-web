@@ -2,11 +2,14 @@
   <nav class="top-header depth-1 theme-bgcolor-primary">
     <div class="m-wrap">
       <div class="left">
-        <router-link class="item" to="/">
+        <router-link class="item" to="/" exact>
           首页
         </router-link>
         <router-link class="item" to="/blog">
           博文
+        </router-link>
+        <router-link class="item" to="/webcomponents">
+          组件
         </router-link>
       </div>
       <div class="right">
@@ -191,5 +194,14 @@ export default {
   }
   .user:hover ul {
     display: block;
+  }
+  .router-link-active:after {
+    content: " ";
+    position: absolute;
+    bottom: 8px;
+    display: inline-block;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 100%;
   }
 </style>

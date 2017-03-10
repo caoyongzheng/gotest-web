@@ -18,12 +18,12 @@ const postcssOptions = {
 
 const config = {
   entry: {
-    vendor: ['es6-promise', 'vue', 'vue-router', 'fetch2', 'normalize.css'],
+    vendor: ['es6-promise', 'vue', 'vue-router', 'vuex', 'fetch2', 'normalize.css'],
     app: ['./src/index.js'],
   },
   output: {
     filename: "[name].js",
-    chunkFilename: "[name]-[hash].chunk.js",
+    chunkFilename: "[id]-[chunkHash].chunk.js",
     path: path.resolve('./assets'),
     publicPath,
   },

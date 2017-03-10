@@ -10,6 +10,13 @@ const routes = [
   { path: '/blog/new', component: require('./pages/BlogNew') },
   { path: '/blog/:blogId', component: require('./pages/BlogView') },
   { path: '/blog/:blogId/edit', component: require('./pages/BlogEdit') },
+  {
+    path: '/webcomponents',
+    component: require('./pages/webcomponents/Index'),
+    children: [
+      { path: 'progressbar', component: require('./pages/webcomponents/ProgressBar/Index') }
+    ]
+  },
 ]
 
 routes.push({ path: '*', component: require('./pages/NotFound') })
