@@ -2,7 +2,7 @@
   <Container>
     <div class="form">
       <input class="form-title" type="text" v-model="title" placeholder="标题">
-      <markdown-editor ref="editorCom"></markdown-editor>
+      <markdown-editor  :value="value" v-on:requestValueChange="onValue"></markdown-editor>
       <button type="button" class="btn btn-primary btn-fullwidth add" :disabled="active" v-on:click="addBlog">新增</button>
     </div>
   </Container>
@@ -23,13 +23,14 @@ export default {
     return {
       title: '',
       active: false,
+      value: '',
     }
   },
   methods: {
     addBlog() {
       const postData = {
         title: this.title,
-        content: this.$refs.editorCom.getValue(),
+        content: this.value,
       }
       if (!this.verifyPostData(postData)) {
         return
@@ -39,7 +40,7 @@ export default {
       }
       fetch2('/blog', {
         method: 'POST',
-        body: JSON.stringify({ title: this.title, content: this.$refs.editorCom.getValue() }),
+        body: JSON.stringify(postData),
       }).then((response) => {
         this.active = false
         return response
@@ -63,6 +64,9 @@ export default {
         return false
       }
       return true
+    },
+    onValue(v) {
+      this.value = v
     },
   },
   components: { 'markdown-editor': MarkdownEditor, Container },
